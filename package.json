@@ -1,5 +1,5 @@
 {
-  "name": "ts-react-tmpl",
+  "name": "esm-ts-full-stack",
   "version": "1.0.0",
   "description": "",
   "author": "Oleksii Honchar",
@@ -32,6 +32,7 @@
     "@types/node": "^20.2.5",
     "@types/node-emoji": "^1.8.2",
     "@types/uuid": "9.0.1",
+    "@types/webpack-bundle-analyzer": "^4.6.0",
     "classnames": "2.3.2",
     "color": "4.2.3",
     "colors": "^1.4.0",

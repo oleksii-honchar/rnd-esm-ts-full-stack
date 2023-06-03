@@ -2,6 +2,7 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "ts-node": {
     "esm": true,
+    "transpileOnly": true
   },
   "compilerOptions": {
     "allowJs": true,
@@ -21,7 +22,8 @@
     "paths": {
       "src/*": [ "src/*" ],
       "scripts/*": [ "scripts/*" ],
-      "blablo": ["./scripts/blablo.ts"]
+      "blablo": ["./scripts/blablo.ts"],
+      "package.json": ["./package.json"]
     },
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "removeComments": true,

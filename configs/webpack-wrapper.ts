@@ -9,12 +9,20 @@ import colors from "colors";
 import { blablo } from "blablo";
 import * as emoji from "node-emoji";
 
+import { __dirname, __filename, setCurrMetaUrl } from "scripts/esm-utils.ts";
+setCurrMetaUrl(import.meta.url);
+
+import { configFactory } from "./webpack.config.ts";
+
 colors.enable();
 const logHeader = "[Webpack]".cyan;
 const emoSparkles: any = emoji.get(emoji.find("✨")?.key ?? "");
 const argv = minimist(process.argv.slice(2));
 
 blablo.cleanLog("\u2500".repeat(108).white);
+
+const configs = configFactory({}, process.argv.slice(2));
+
 blablo.cleanLog(logHeader, "starting webpack");
 
 blablo.cleanLog(argv);
