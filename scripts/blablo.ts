@@ -1,13 +1,23 @@
-import ora from 'ora';
+import ora from "ora";
 /**
  * Helper functions
  */
 const noop = {
-  log: () => { /* stub */ },
-  debug: () => { /* stub */ },
-  info: () => { /* stub */ },
-  warn: () => { /* stub */ },
-  error: () => { /* stub */ },
+  log: () => {
+    /* stub */
+  },
+  debug: () => {
+    /* stub */
+  },
+  info: () => {
+    /* stub */
+  },
+  warn: () => {
+    /* stub */
+  },
+  error: () => {
+    /* stub */
+  },
 };
 
 /**
@@ -17,27 +27,29 @@ class Blablo {
   argsQueue: any[] = [];
   nativeConsole: any;
   logFn: Function;
+  warnFn: Function;
   errFn: Function;
   spinner: any;
-  constructor(options:{spinner:any}) {
+  constructor(options: { spinner: any }) {
     this.spinner = options?.spinner ?? undefined;
     this.nativeConsole = console || window.console || noop;
     this.logFn = this.nativeConsole.log;
+    this.warnFn = this.nativeConsole.warn;
     this.errFn = this.nativeConsole.error;
   }
-  log (...args: any) {
+  log(...args: any) {
     if (this.spinner.isSpinning) {
       // need to check whether it is new log or the same just updating
       // assume that first 20 chars will remain the same for same sequence
-      const currPayload = this.argsQueue.join('');
-      const nextPayload = args.join('');
+      const currPayload = this.argsQueue.join("");
+      const nextPayload = args.join("");
       if (currPayload.slice(0, 40) !== nextPayload.slice(0, 40)) {
         this.spinner.succeed();
       }
     }
 
     this.argsQueue = [...args];
-    const payload = this.argsQueue.join('');
+    const payload = this.argsQueue.join("");
 
     this.spinner.text = payload;
     !this.spinner.isSpinning && this.spinner.start();
@@ -47,15 +59,18 @@ class Blablo {
   error(...args: any) {
     this.errFn.apply(this.nativeConsole, args);
   }
+  warn(...args: any) {
+    this.warnFn.apply(this.nativeConsole, args);
+  }
 
-  cleanLog (...args:any) {
-    const payload = args.join('') + '\n';
+  cleanLog(...args: any) {
+    const payload = args.join("") + "\n";
     // process.stdout.write(payload);
     this.logFn.apply(this.nativeConsole, args);
   }
-  chainLog (...args: any) {
+  chainLog(...args: any) {
     this.argsQueue = this.argsQueue.concat(args);
-    const payload = this.argsQueue.join('');
+    const payload = this.argsQueue.join("");
 
     !this.spinner.isSpinning && this.spinner.start();
 
@@ -63,13 +78,13 @@ class Blablo {
 
     return this; // in order to be able to call clear()
   }
-  finish () {
+  finish() {
     this.argsQueue = [];
     this.spinner.succeed();
     // process.stdout.write('\n');
   }
 }
 
-const spinner = ora({ color:'yellow' });
+const spinner = ora({ color: "yellow" });
 
 export const blablo = new Blablo({ spinner });

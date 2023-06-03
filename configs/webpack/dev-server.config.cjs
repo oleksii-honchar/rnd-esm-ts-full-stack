@@ -1,6 +1,6 @@
 const path = require("path");
 
-const logHeader = "[config:webpack:snippet]".cyan;
+const logHeader = "[webpack:config:snippet]".cyan;
 console.log(logHeader, "DevServer loaded");
 
 const pkg = require("../../package.json");

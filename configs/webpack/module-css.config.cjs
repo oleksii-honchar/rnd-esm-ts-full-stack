@@ -1,7 +1,7 @@
 const ExtractCssChunksPlugin = require('extract-css-chunks-webpack-plugin');
 const path = require("path");
 
-const logHeader = "[config:webpack:snippet]".cyan;
+const logHeader = "[webpack:config:snippet]".cyan;
 console.log(logHeader,"'Module-CSS' loaded");
 
 const isProd = process.env.NODE_ENV === "production";

@@ -1,19 +1,20 @@
 import path from "path";
 import webpack from "webpack";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+// @ts-ignore
 import LoaderOptionsPlugin from "webpack/lib/LoaderOptionsPlugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import { __dirname } from "scripts/esm-utils.ts";
 
 const { PruneLicenseFilesInDist } = await import("./plugins/PruneLicenseFilesInDist.plugin.ts");
 
-const logHeader = "[config:webpack:snippet]".cyan;
+const logHeader = "[webpack:config:snippet]".cyan;
 console.log(logHeader, "'Base' loaded");
 
 const outputPath = path.join(__dirname(), "../dist");
 import pkg from "package.json" assert { type: "json" };
 
-export const baseConfig = (env: {}) => {
+export const baseConfig = (env: any = {}) => {
   const outputSuff = env.TS_TARGET === "es2016" ? "es2016.js" : "mjs";
 
   console.log(logHeader, `'Base' processing '${env.TS_TARGET}' config`);
@@ -27,7 +28,7 @@ export const baseConfig = (env: {}) => {
       modules: ["src", "node_modules"],
       plugins: [
         new TsconfigPathsPlugin({
-          configFile: path.join(__dirname(), `../tsconfig.${env.TS_TARGET}.json`),
+          configFile: path.join(__dirname(), `./tsconfig.${env.TS_TARGET}.json`),
           logLevel: "INFO",
         }),
       ],

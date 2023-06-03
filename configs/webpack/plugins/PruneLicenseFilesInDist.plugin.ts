@@ -15,12 +15,12 @@ const emoSparkles = emoji.get(emoji.find("✨")?.key ?? "");
  * Some of the open-source lib creating additional license files on build. Let's prune them
  */
 export class PruneLicenseFilesInDist {
-  outputPath = [];
-  constructor(outputPath) {
+  outputPath = "";
+  constructor(outputPath: string) {
     this.outputPath = outputPath;
   }
-  apply(compiler) {
-    compiler.hooks.thisCompilation.tap("Replace", (compilation) => {
+  apply(compiler: any) {
+    compiler.hooks.thisCompilation.tap("Replace", (compilation: any) => {
       compilation.hooks.processAssets.tap(
         {
           name: "Replace",

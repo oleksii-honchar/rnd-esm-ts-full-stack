@@ -1,8 +1,10 @@
-const path = require("path");
-const logHeader = "[config:webpack:snippet]".cyan;
-console.log(logHeader,"'Module' loaded");
+import path from "path";
+import { __dirname } from "scripts/esm-utils.ts";
 
-module.exports = (env) => {
+const logHeader = "[webpack:config:snippet]".cyan;
+console.log(logHeader, "'Module' loaded");
+
+export const moduleConfig = (env: any = {}) => {
   return {
     module: {
       rules: [
@@ -11,20 +13,11 @@ module.exports = (env) => {
           test: /\.[tj]sx?$/,
           use: "source-map-loader",
         },
-        // {
-        //   test: /\.[tj]sx?$/,
-        //   loader: "ts-loader",
-        //   options: {
-        //     transpileOnly: true,
-        //     configFile: path.join(__dirname, `../tsconfig.${env.TS_TARGET}.json`),
-        //   },
-        //   exclude: [/\.(spec|e2e|d)\.[tj]sx?$/],
-        // },
         {
           test: /\.[tj]sx?$/,
           loader: "esbuild-loader",
           options: {
-            tsconfig: path.join(__dirname, `../tsconfig.${env.TS_TARGET}.json`),
+            tsconfig: path.join(__dirname(), `./tsconfig.${env.TS_TARGET}.json`),
           },
           exclude: [/\.(spec|e2e|d)\.[tj]sx?$/],
         },

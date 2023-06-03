@@ -3,13 +3,13 @@
  */
 import process from "node:process";
 
-import * as webpack from "./webpack-wrapper.js";
+import webpack from "webpack";
 import minimist from "minimist";
 import colors from "colors";
 import { blablo } from "blablo";
 import * as emoji from "node-emoji";
 
-import { __dirname, __filename, setCurrMetaUrl } from "scripts/esm-utils.ts";
+import { setCurrMetaUrl } from "scripts/esm-utils.ts";
 setCurrMetaUrl(import.meta.url);
 
 import { configFactory } from "./webpack.config.ts";
@@ -19,22 +19,44 @@ const logHeader = "[Webpack]".cyan;
 const emoSparkles: any = emoji.get(emoji.find("✨")?.key ?? "");
 const argv = minimist(process.argv.slice(2));
 
-blablo.cleanLog("\u2500".repeat(108).white);
-
-const configs = configFactory({}, process.argv.slice(2));
+const config = configFactory({}, process.argv.slice(2));
 
 blablo.cleanLog(logHeader, "starting webpack");
 
-blablo.cleanLog(argv);
-blablo.cleanLog(process.argv);
-// const compiler = webpack({
-// });
+// @ts-ignore
+const compiler = webpack(config);
 
-// compiler.run((err, stats) => {
-//
-// compiler.close((closeErr) => {
-// });
-// });
+const compilerPromise = new Promise((resolve, reject) => {
+  let errors: any[] = [];
+  compiler.run((err, stats) => {
+    if (err) {
+      blablo.error(err);
+      errors.push(err);
+    }
+
+    const info = stats?.toJson();
+    if (stats?.hasErrors()) {
+      blablo.error(info?.errors);
+      errors.push(info?.errors);
+    }
+    !!stats?.hasWarnings() && blablo.warn(info?.warnings);
+
+    compiler.close((closeErr) => {
+      if (closeErr) {
+        blablo.error(closeErr);
+        errors.push(closeErr);
+      }
+      if (errors.length) {
+        return reject(errors);
+      }
+      resolve(stats);
+    });
+  });
+});
+
+try {
+  await compilerPromise;
+} catch (e) {}
 
 blablo.cleanLog(logHeader, `Done ${emoSparkles}`);
 
