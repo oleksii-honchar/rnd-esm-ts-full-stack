@@ -1,9 +1,12 @@
+/**
+ * This wrapper allows to use ESM ts webpack configs in order to have esm style modules in whole repo
+ */
 import process from "node:process";
 
 import * as webpack from "./webpack-wrapper.js";
 import minimist from "minimist";
 import colors from "colors";
-import { blablo } from "../scripts/blablo.ts";
+import { blablo } from "blablo";
 import * as emoji from "node-emoji";
 
 colors.enable();

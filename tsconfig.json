@@ -2,7 +2,6 @@
   "extends": "@tsconfig/recommended/tsconfig.json",
   "ts-node": {
     "esm": true,
-    "showConfig": true
   },
   "compilerOptions": {
     "allowJs": true,
@@ -19,7 +18,11 @@
     "moduleResolution": "NodeNext",
     "noEmit": true,
     "noImplicitAny": true,
-    "paths": {/* don't work with esm */},
+    "paths": {
+      "src/*": [ "src/*" ],
+      "scripts/*": [ "scripts/*" ],
+      "blablo": ["./scripts/blablo.ts"]
+    },
     "plugins": [{ "name": "typescript-plugin-css-modules" }],
     "removeComments": true,
     "resolveJsonModule": true,

@@ -38,8 +38,8 @@ ts-node-config:
 
 build: clean-dist load-project-env check-env-vars ## Build production version
 	@source $(envFileProd)
-	@npx env-cmd -f $(envFileProd) node --no-warnings --abort-on-uncaught-exception \
-		--loader ts-node/esm ./configs/webpack-wrapper.ts\
+	@npx env-cmd -f $(envFileProd) node --no-warnings --experimental-specifier-resolution=node \
+		--loader ./scripts/ts-esm-loader-with-tsconfig-paths.js ./configs/webpack-wrapper.ts\
 		--config ./configs/webpack.config.cjs \
 		--mode production \
 		--env BUILD_ANALYZE=$(BUILD_ANALYZE)
@@ -47,7 +47,6 @@ build: clean-dist load-project-env check-env-vars ## Build production version
 	@printf "${GREEN}build: DONE${NC}\n"
 
 build-loc: clean-dist load-project-env check-env-vars ## Build local version
-	@npx env-cmd -f $(envFileLoc) "$(PWD)/devops/local/scripts/check-env-vars.sh"
 	@source $(envFileLoc)
 	@npx env-cmd -f $(envFileLoc) ./configs/webpack.ts \
 		--config ./configs/webpack.config.cjs \
