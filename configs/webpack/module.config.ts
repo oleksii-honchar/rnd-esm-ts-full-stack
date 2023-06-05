@@ -1,8 +1,9 @@
 import path from "path";
 import { __dirname } from "scripts/esm-utils.ts";
+import { blablo } from "blablo";
 
 const logHeader = "[webpack:config:snippet]".cyan;
-console.log(logHeader, "'Module' loaded");
+blablo.cleanLog(logHeader, "'Module' loaded");
 
 export const moduleConfig = (env: any = {}) => {
   return {

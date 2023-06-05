@@ -1,25 +1,22 @@
 import { merge } from "webpack-merge";
-import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import colors from "colors";
-colors.enable();
+import { blablo } from "blablo";
 
-// Short usage reference
-// `NODE_ENV` = development | test | production
-// `LOG_LEVEL` = error | warn | info | debug
 import pkg from "package.json" assert { type: "json" };
 
 import { baseConfig } from "./webpack/base.config.ts";
 import { moduleConfig } from "./webpack/module.config.ts";
-// import { moduleCssCfg } from "./webpack/module-css.config.ts";
-// const { devSrvCfg } from "./webpack/dev-server.config.ts";
-// const { prodCfg } from "./webpack/prod.config.ts";
-// const { externalsCfg } from "./webpack/externals.config.ts";
+import { cssModuleConfig } from "./webpack/module-css.config.ts";
+import { devServerConfig } from "./webpack/dev-server.config.ts";
+import { prodConfig } from "./webpack/prod.config.ts";
+import { externalsConfig } from "./webpack/externals.config.ts";
 import GenerateIndexHTML from "./webpack/plugins/GenerateIndexHTML.plugin.ts";
 
+colors.enable();
 const logHeader = "[webpack:config]".cyan;
-console.log(logHeader, `"${pkg.name}" config composition started`);
+blablo.cleanLog(logHeader, `"${pkg.name}" config composition started`);
 
-export const configFactory = (env: any = {}, argv: string[]) => {
+export const configFactory = (env: any = {}, argv: { mode: string }) => {
   env = env ? env : {};
   env.BUILD_ANALYZE = env.BUILD_ANALYZE ? env.BUILD_ANALYZE : null;
 
@@ -27,11 +24,10 @@ export const configFactory = (env: any = {}, argv: string[]) => {
 
   const envES2022 = { ...env, TS_TARGET: "es2022" };
 
-  let cfgES2022 = baseConfig(envES2022);
-  // @ts-ignore
-  cfgES2022 = merge(cfgES2022, moduleConfig(envES2022));
-  // cfgES2022 = merge(cfgES2022, moduleCssCfg(env));
-  // cfgES2022 = merge(cfgES2022, externalsCfg);
+  let cfgES2022 = baseConfig(envES2022); // @ts-ignore
+  cfgES2022 = merge(cfgES2022, moduleConfig(envES2022)); // @ts-ignore
+  cfgES2022 = merge(cfgES2022, cssModuleConfig(env)); // @ts-ignore
+  cfgES2022 = merge(cfgES2022, externalsConfig);
 
   cfgES2022 = merge(cfgES2022, {
     // @ts-ignore
@@ -41,24 +37,17 @@ export const configFactory = (env: any = {}, argv: string[]) => {
     plugins: [new GenerateIndexHTML(env)],
   });
 
-  // if (argv.mode === "development") {
-  //   cfgES2022 = merge(cfgES2022, devSrvCfg(envES2022));
-  // }
-
-  // if (env.BUILD_ANALYZE === "true") {
-  //   console.log(logHeader, "bundle analyzer included");
-
-  // cfgES2022 = merge(cfgES2022, {
-  //   plugins: [new BundleAnalyzerPlugin(env)],
-  // });
-  // }
+  if (argv.mode === "development") {
+    // @ts-ignore
+    cfgES2022 = merge(cfgES2022, devServerConfig(envES2022));
+  }
 
   if (process.env.NODE_ENV !== "production") {
     console.log("[webpack:config] config composition completed");
     return cfgES2022;
   }
-
-  // cfgES2022 = merge(cfgES2022, prodCfg);
+  // @ts-ignore
+  cfgES2022 = merge(cfgES2022, prodConfig);
 
   console.log("[webpack:config]".cyan, "config composition completed");
   return cfgES2022;

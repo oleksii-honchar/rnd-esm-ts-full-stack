@@ -48,7 +48,8 @@ build: clean-dist load-project-env check-env-vars ## Build production version
 
 build-loc: clean-dist load-project-env check-env-vars ## Build local version
 	@source $(envFileLoc)
-	@npx env-cmd -f $(envFileLoc) ./configs/webpack.ts \
+	@npx env-cmd -f $(envFileLoc) node --no-warnings --experimental-specifier-resolution=node \
+		--loader ./scripts/ts-esm-loader-with-tsconfig-paths.js ./configs/webpack-wrapper.ts\
 		--config ./configs/webpack.config.cjs \
 		--mode development \
 		--env BUILD_ANALYZE=$(BUILD_ANALYZE)

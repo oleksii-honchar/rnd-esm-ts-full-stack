@@ -5,11 +5,12 @@ import CopyWebpackPlugin from "copy-webpack-plugin";
 import LoaderOptionsPlugin from "webpack/lib/LoaderOptionsPlugin";
 import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
 import { __dirname } from "scripts/esm-utils.ts";
+import { blablo } from "blablo";
 
 const { PruneLicenseFilesInDist } = await import("./plugins/PruneLicenseFilesInDist.plugin.ts");
 
 const logHeader = "[webpack:config:snippet]".cyan;
-console.log(logHeader, "'Base' loaded");
+blablo.cleanLog(logHeader, "'Base' loaded");
 
 const outputPath = path.join(__dirname(), "../dist");
 import pkg from "package.json" assert { type: "json" };
@@ -17,7 +18,7 @@ import pkg from "package.json" assert { type: "json" };
 export const baseConfig = (env: any = {}) => {
   const outputSuff = env.TS_TARGET === "es2016" ? "es2016.js" : "mjs";
 
-  console.log(logHeader, `'Base' processing '${env.TS_TARGET}' config`);
+  blablo.cleanLog(logHeader, `'Base' processing '${env.TS_TARGET}' config`);
 
   return {
     mode: process.env.NODE_ENV,
