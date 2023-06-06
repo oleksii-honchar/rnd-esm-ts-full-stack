@@ -32,7 +32,7 @@ export const configFactory = (env: any = {}, argv: { mode: string }) => {
   cfgES2022 = merge(cfgES2022, {
     // @ts-ignore
     entry: {
-      app: "./src/index.tsx",
+      app: "./src/index.ts",
     },
     plugins: [new GenerateIndexHTML(env)],
   });
@@ -43,7 +43,7 @@ export const configFactory = (env: any = {}, argv: { mode: string }) => {
   }
 
   if (process.env.NODE_ENV !== "production") {
-    blablo.cleanLog("[webpack:config] config composition completed");
+    blablo.cleanLog("[webpack:config]".cyan, "config composition completed");
     return cfgES2022;
   }
   // @ts-ignore
