@@ -1,7 +1,7 @@
 import { blablo } from "blablo";
 
-const logHeader = "[webpack:config:snippet]".cyan;
-blablo.cleanLog(logHeader, "'Externals' loaded");
+const logHeader = "[webpack:config:snippet] ".cyan;
+blablo.log(logHeader, "loading ", "'Externals'".white.bold).finish();
 
 export const externalsConfig: {} = {
   externals: {

@@ -4,6 +4,7 @@ import { promisify } from "util";
 import * as emoji from "node-emoji";
 
 import colors from "colors";
+import { blablo } from "blablo";
 
 const { Compilation, sources } = webpack;
 
@@ -27,12 +28,12 @@ export class PruneLicenseFilesInDist {
           stage: Compilation.PROCESS_ASSETS_STAGE_OPTIMIZE,
         },
         () => {
-          console.log(
-            "[PruneLicenseFilesInDist:plugin]".cyan,
+          blablo.log(
+            "[plugin:PruneLicenseFilesInDist] ".cyan,
             "looking *.LICENCE.txt to prune in:",
             this.outputPath.yellow,
           );
-          console.log("[PruneLicenseFilesInDist:plugin]".cyan, `Done ${emoSparkles}`);
+          blablo.chainLog(" ❱ ", `Done ${emoSparkles}`).finish();
         },
       );
     });

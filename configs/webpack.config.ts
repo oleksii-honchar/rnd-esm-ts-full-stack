@@ -14,13 +14,13 @@ import GenerateIndexHTML from "./webpack/plugins/GenerateIndexHTML.plugin.ts";
 
 colors.enable();
 const logHeader = "[webpack:config]".cyan;
-blablo.cleanLog(logHeader, `"${pkg.name}" config composition started`);
+blablo.cleanLog(logHeader, `starting "${pkg.name}" config composition`);
 
 export const configFactory = (env: any = {}, argv: { mode: string }) => {
   env = env ? env : {};
   env.BUILD_ANALYZE = env.BUILD_ANALYZE ? env.BUILD_ANALYZE : null;
 
-  console.log(logHeader, `"${process.env.NODE_ENV}" mode used...`);
+  blablo.cleanLog(logHeader, `using "${process.env.NODE_ENV}" mode`);
 
   const envES2022 = { ...env, TS_TARGET: "es2022" };
 
@@ -43,12 +43,12 @@ export const configFactory = (env: any = {}, argv: { mode: string }) => {
   }
 
   if (process.env.NODE_ENV !== "production") {
-    console.log("[webpack:config] config composition completed");
+    blablo.cleanLog("[webpack:config] config composition completed");
     return cfgES2022;
   }
   // @ts-ignore
   cfgES2022 = merge(cfgES2022, prodConfig);
 
-  console.log("[webpack:config]".cyan, "config composition completed");
+  blablo.cleanLog("[webpack:config]".cyan, "config composition completed");
   return cfgES2022;
 };

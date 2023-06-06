@@ -1,6 +1,7 @@
 SHELL=/bin/bash
 RED=\033[0;31m
 GREEN=\033[0;32m
+BG_GREY=\033[48;5;237m
 NC=\033[0m # No Color
 
 envFileLoc = "$(PWD)/configs/envs/local.env"
@@ -37,6 +38,7 @@ ts-node-config:
 .PHONY: ts-node-config
 
 build: clean-dist load-project-env check-env-vars ## Build production version
+	@printf "${BG_GREY}[build] Start${NC}\n"
 	@source $(envFileProd)
 	@npx env-cmd -f $(envFileProd) node --no-warnings --experimental-specifier-resolution=node \
 		--loader ./scripts/ts-esm-loader-with-tsconfig-paths.js ./configs/webpack-wrapper.ts\
@@ -44,7 +46,7 @@ build: clean-dist load-project-env check-env-vars ## Build production version
 		--mode production \
 		--env BUILD_ANALYZE=$(BUILD_ANALYZE)
 
-	@printf "${GREEN}build: DONE${NC}\n"
+	@printf "${BG_GREY}[build] Done${NC}\n"
 
 build-loc: clean-dist load-project-env check-env-vars ## Build local version
 	@source $(envFileLoc)
@@ -53,7 +55,7 @@ build-loc: clean-dist load-project-env check-env-vars ## Build local version
 		--config ./configs/webpack.config.cjs \
 		--mode development \
 		--env BUILD_ANALYZE=$(BUILD_ANALYZE)
-	@printf "${GREEN}build-loc: DONE${NC}\n"
+	@printf "${GREEN}build-loc: Done${NC}\n"
 
 launch-dev-server: load-project-env check-env-vars ## Launches local Webpack dev-server
 	@npx env-cmd -f $(envFileLoc) "${PWD}/devops/local/scripts/check-env-vars.sh"

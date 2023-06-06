@@ -4,8 +4,8 @@ import { purgeCssConfig } from "./purgecss.config.js";
 import { blablo } from "blablo";
 
 const require = createRequire(import.meta.url);
-const logHeader = "[config:post-css]".cyan;
-blablo.cleanLog(logHeader, "config loaded");
+const logHeader = "[config:post-css] ".cyan;
+blablo.log(logHeader, "loading config").finish();
 
 export const postCssConfig = async (params: { file: any; options: any; env: any }) => {
   const mdlPostCssImport = require("postcss-import");

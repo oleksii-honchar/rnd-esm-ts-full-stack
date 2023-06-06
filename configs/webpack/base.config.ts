@@ -10,7 +10,7 @@ import { blablo } from "blablo";
 const { PruneLicenseFilesInDist } = await import("./plugins/PruneLicenseFilesInDist.plugin.ts");
 
 const logHeader = "[webpack:config:snippet]".cyan;
-blablo.cleanLog(logHeader, "'Base' loaded");
+blablo.log(logHeader, " loading ", "'Base'".white.bold).finish();
 
 const outputPath = path.join(__dirname(), "../dist");
 import pkg from "package.json" assert { type: "json" };

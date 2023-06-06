@@ -2,8 +2,8 @@ import path from "path";
 import { blablo } from "blablo";
 import { __dirname } from "scripts/esm-utils.ts";
 
-const logHeader = "[webpack:config:snippet]".cyan;
-blablo.cleanLog(logHeader, "DevServer loaded");
+const logHeader = "[webpack:config:snippet] ".cyan;
+blablo.log(logHeader, "loading ", "'DevServer'".white.bold).finish();
 
 export const devServerConfig = (env: any) => {
   blablo.cleanLog(logHeader, `Base: processing "${env.TS_TARGET}" config`);

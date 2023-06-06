@@ -3,8 +3,8 @@ import path from "path";
 import { __dirname } from "scripts/esm-utils.ts";
 import { blablo } from "blablo";
 
-const logHeader = "[webpack:config:snippet]".cyan;
-blablo.cleanLog(logHeader, "'Module-CSS' loaded");
+const logHeader = "[webpack:config:snippet] ".cyan;
+blablo.log(logHeader, "loading ", "'Module-CSS'".white.bold).finish();
 
 const isProd = process.env.NODE_ENV === "production";
 

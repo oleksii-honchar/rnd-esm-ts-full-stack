@@ -15,13 +15,13 @@ setCurrMetaUrl(import.meta.url);
 import { configFactory } from "./webpack.config.ts";
 
 colors.enable();
-const logHeader = "[Webpack]".cyan;
+const logHeader = "[Webpack]".cyan.bold;
 const emoSparkles: any = emoji.get(emoji.find("✨")?.key ?? "");
 const argv = minimist(process.argv.slice(2));
 
 const config = configFactory({}, process.argv.slice(2));
 
-blablo.cleanLog(logHeader, "starting webpack");
+blablo.cleanLog(logHeader, "starting compilation", emoji.get(emoji.find("rocket")?.key ?? ""));
 
 // @ts-ignore
 const compiler = webpack(config);
