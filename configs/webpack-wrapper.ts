@@ -59,7 +59,7 @@ const compilerPromise = new Promise((resolve, reject) => {
     );
 
     if (operationMode == "watch") {
-      blablo.log(logHeader, " watching");
+      blablo.useSpinner("toggle7").log(logHeader, " watching");
       return;
     }
 

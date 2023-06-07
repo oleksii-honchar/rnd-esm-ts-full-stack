@@ -32,7 +32,7 @@ export const configFactory = (env: any = {}, argv: { mode: string }) => {
   cfgES2022 = merge(cfgES2022, {
     // @ts-ignore
     entry: {
-      app: "./src/index.ts",
+      app: "./src/index.tsx",
     },
     plugins: [new GenerateIndexHTML(env)],
   });

@@ -1,4 +1,5 @@
-import ora from "ora";
+import ora, { Color, Ora } from "ora";
+import { SpinnerName } from "cli-spinners";
 /**
  * Helper functions
  */
@@ -29,30 +30,35 @@ class Blablo {
   logFn: Function;
   warnFn: Function;
   errFn: Function;
-  spinner: any;
-  constructor(options: { spinner: any }) {
-    this.spinner = options?.spinner ?? undefined;
+  currSpinner: any;
+  ora: Ora;
+  defaultSpinnerName: string = "dots";
+  defaultSpinnerColor: string = "yellow";
+  constructor(options: { ora: Ora }) {
+    this.ora = options.ora;
+    this.resetSpinner();
+
     this.nativeConsole = console || window.console || noop;
     this.logFn = this.nativeConsole.log;
     this.warnFn = this.nativeConsole.warn;
     this.errFn = this.nativeConsole.error;
   }
   log(...args: any) {
-    if (this.spinner.isSpinning) {
+    if (this.currSpinner.isSpinning) {
       // need to check whether it is new log or the same just updating
       // assume that first 20 chars will remain the same for same sequence
       const currPayload = this.argsQueue.join("");
       const nextPayload = args.join("");
       if (currPayload.slice(0, 40) !== nextPayload.slice(0, 40)) {
-        this.spinner.succeed();
+        this.currSpinner.succeed();
       }
     }
 
     this.argsQueue = [...args];
     const payload = this.argsQueue.join("");
 
-    this.spinner.text = payload;
-    !this.spinner.isSpinning && this.spinner.start();
+    this.currSpinner.text = payload;
+    !this.currSpinner.isSpinning && this.currSpinner.start();
     return this; // in order to be able to call clear()
   }
 
@@ -72,19 +78,31 @@ class Blablo {
     this.argsQueue = this.argsQueue.concat(args);
     const payload = this.argsQueue.join("");
 
-    !this.spinner.isSpinning && this.spinner.start();
+    !this.currSpinner.isSpinning && this.currSpinner.start();
 
-    this.spinner.text = payload;
+    this.currSpinner.text = payload;
 
     return this; // in order to be able to call clear()
   }
   finish() {
     this.argsQueue = [];
-    this.spinner.succeed();
-    // process.stdout.write('\n');
+    this.currSpinner.succeed();
+    this.resetSpinner();
+  }
+
+  resetSpinner() {
+    this.currSpinner = ora({
+      spinner: this.defaultSpinnerName as SpinnerName,
+      color: this.defaultSpinnerColor as Color,
+    });
+  }
+  useSpinner(name: string) {
+    this.currSpinner = ora({
+      spinner: name as SpinnerName,
+      color: this.defaultSpinnerColor as Color,
+    });
+    return this;
   }
 }
 
-const spinner = ora({ color: "yellow" });
-
-export const blablo = new Blablo({ spinner });
+export const blablo = new Blablo({ ora });

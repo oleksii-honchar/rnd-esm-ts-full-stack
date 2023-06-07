@@ -2,6 +2,7 @@ import webpack from "webpack";
 
 import colors from "colors";
 import { generateIndexHtml } from "../libs/generateIndexHtml.ts";
+import { blablo } from "blablo";
 
 const { Compilation, sources } = webpack;
 
@@ -20,14 +21,15 @@ export default class GenerateIndexHTML {
         },
         () => {
           // get the file main.js
-          console.log(
-            "[GenerateIndexHTML:plugin]".cyan,
-            "processing asset",
+          blablo.log(
+            "[GenerateIndexHTML:plugin] ".cyan,
+            "processing asset ",
             "index.hbs".green.bold,
-            "❱",
+            " ❱ ",
             "dist/index.html".green.bold,
           );
           generateIndexHtml(this.env);
+          blablo.finish();
         },
       );
     });
