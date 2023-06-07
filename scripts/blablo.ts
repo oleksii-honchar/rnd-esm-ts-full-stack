@@ -1,4 +1,5 @@
-import ora, { Color, Ora } from "ora";
+import ora, { Options } from "ora";
+import { Color, Ora } from "ora";
 import { SpinnerName } from "cli-spinners";
 /**
  * Helper functions
@@ -34,7 +35,9 @@ class Blablo {
   ora: Ora;
   defaultSpinnerName: string = "dots";
   defaultSpinnerColor: string = "yellow";
-  constructor(options: { ora: Ora }) {
+
+  constructor(options: { ora: (options?: string | Options) => Ora }) {
+    // @ts-ignore
     this.ora = options.ora;
     this.resetSpinner();
 

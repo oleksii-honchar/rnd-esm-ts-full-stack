@@ -12,7 +12,7 @@ const { PruneLicenseFilesInDist } = await import("./plugins/PruneLicenseFilesInD
 const logHeader = "[webpack:config:snippet]".cyan;
 blablo.log(logHeader, " loading ", "'Base'".white.bold).finish();
 
-const outputPath = path.join(__dirname(), "../dist");
+const outputPath = path.join(__dirname(), "../dist/assets");
 import pkg from "package.json" assert { type: "json" };
 
 export const baseConfig = (env: any = {}) => {
@@ -21,6 +21,7 @@ export const baseConfig = (env: any = {}) => {
   blablo.cleanLog(logHeader, `'Base' processing '${env.TS_TARGET}' config`);
 
   return {
+    stats: { chunks: false },
     mode: process.env.NODE_ENV,
     cache: true,
     devtool: process.env.NODE_ENV === "production" ? false : "inline-source-map",
@@ -39,7 +40,7 @@ export const baseConfig = (env: any = {}) => {
       filename: `[name].bundle.${outputSuff}`,
       chunkFilename: `[name].bundle.${outputSuff}`,
       sourceMapFilename: `[name].${env.TS_TARGET}.map`,
-      publicPath: "/assets/",
+      publicPath: "/assets",
     },
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({
@@ -62,7 +63,15 @@ export const baseConfig = (env: any = {}) => {
           {
             from: "./src/assets",
             to: ".",
-            globOptions: { ignore: ["**/*.hbs", "**/.DS_Store", "**/index.hbs"] },
+            globOptions: { ignore: ["**/*.hbs", "**/.DS_Store", "**/index.hbs", "**/favicons/**"] },
+          },
+        ],
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          {
+            from: "./src/assets/favicons",
+            to: "../favicons",
           },
         ],
       }),
@@ -70,6 +79,7 @@ export const baseConfig = (env: any = {}) => {
     ],
     node: false,
     watchOptions: {
+      poll: 3000,
       aggregateTimeout: 3000,
     },
   };

@@ -15,7 +15,7 @@ export const devServerConfig = (env: any) => {
       },
       devMiddleware: {
         writeToDisk: true,
-        publicPath: "/assets/",
+        publicPath: "/assets",
       },
       port: process.env.SERVE_PORT,
       static: path.join(__dirname(), "../dist"),
