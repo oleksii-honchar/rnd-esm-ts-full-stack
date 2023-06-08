@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": false,
+    "importHelpers": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "lib": [ "DOM", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "paths": {
+      "src/*": [ "src/*" ]
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+    "removeComments": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2022",
+    "types": ["node"]
+  },
+  "include": [
+    "../src/**/*"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../configs",
+    "../dist",
+    "../docs",
+    "../coverage",
+    "../devops"
+  ]
+}
