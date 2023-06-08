@@ -9,20 +9,16 @@
     "build": "make build",
     "build:loc": "make build-loc",
     "devops:chmod-scripts": "bash devops/local/scripts/chmod-scripts.sh",
-    "launch:loc": "run-p launch:dev-server types:watch",
+    "launch:loc": "npm run launch:dev-server ",
     "launch:dev-server": "make launch-dev-server",
-    "start": "npm run launch:loc",
-    "test": "ts-node-esm test.ts"
+    "start": "npm run launch:loc"
   },
   "license": "MIT",
   "dependencies": {
     "cross-env": "7.0.3",
-    "env-cmd": "10.1.0",
-    "npm-run-all": "4.1.5"
+    "env-cmd": "10.1.0"
   },
   "devDependencies": {
-    "@emotion/styled": "11.11.0",
-    "@hapi/joi": "17.1.0",
     "@tsconfig/node20": "^1.0.1",
     "@tsconfig/recommended": "^1.0.2",
     "@types/color": "^3.0.3",
