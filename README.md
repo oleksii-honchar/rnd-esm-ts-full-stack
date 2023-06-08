@@ -62,7 +62,9 @@ With little additional configuration, ESM modules works perfectly both for node 
   - `--experimental-specifier-resolution=node` - mandatory
   - `--loader ./scripts/ts-esm-loader-with-tsconfig-paths.js` - `ts-node/esm` loader can be used instead, but no ts path will be resolved..
 ```bash
-node --no-warnings --experimental-specifier-resolution=node --loader ./scripts/ts-esm-loader-with-tsconfig-paths.js /configs/webpack-wrapper.ts
+node --no-warnings --experimental-specifier-resolution=node \ 
+  --loader ./scripts/ts-esm-loader-with-tsconfig-paths.js \
+  /configs/webpack-wrapper.ts
 ```
 
 ## Quick start
