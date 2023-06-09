@@ -14,6 +14,9 @@ R&amp;D for ESM TypeScript configuration for Node.js + Webpack based web-app
 ## TL;DR
 With little additional configuration, ESM modules works perfectly both for node and for web-app code! Including multiple non-esm dependencies!
 
+## Intention
+Investigate current state of ESM adoption in node.js + web-app ecosystem.
+
 ## Approach
 - In order to get IDE properly resolve both node and web-app paths all of them added to the root `tsconfig.json`.
 - Custom logger prototype `blablo` used for animated and colored logs.
