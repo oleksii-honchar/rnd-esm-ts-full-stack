@@ -3,6 +3,7 @@ R&amp;D for ESM TypeScript configuration for Node.js + Webpack based web-app
 
 ## Table of contents
 - [TL;DR](#tldr)
+- [Intention](#intention)
 - [Approach](#approach)
 - [R&D Results](#rd-results)
   * [Crucial config for ESM](#crucial-config-for-esm)
